@@ -1,0 +1,52 @@
+.movie_detail {
+  .movie_container {
+    height: 800px;
+    position: relative;
+
+    background-position: center;
+
+    .movie_background {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: none;
+      background-size: cover;
+
+      filter: blur(10px);
+    }
+
+    .movie_row {
+      width: 85%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .movie_pic {
+        img {
+          width: 100%;
+          border-radius: 5px;
+          background-size: cover;
+        }
+      }
+
+      .movie_text {
+        color: white;
+        p {
+          font-size: 30px;
+        }
+        @media screen and (max-width: 768px) {
+          text-align: center;
+          margin-top: 30px; // Đặt width là 100% khi màn hình nhỏ hơn hoặc bằng 768px
+        }
+
+        .movie_text_duration {
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+  color: white;
+  background-color: #b22222;
+  height: 100%;
+  border-radius: 5px;
+  position: relative;
+  .ticket {
+    color: black;
+  }
+  .price {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    hr{
+        width: 100%;
+    }
+  }
+}

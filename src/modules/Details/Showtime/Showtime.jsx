@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { getMovieShowTimes } from "../../../apis/cinemaAPI";
 import dayjs from "dayjs";
 import movieShowtimeStyles from "./movieShowtime.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Showtime({ movieId }) {
   const [cinemas, setCinemas] = useState([]);
+  const navigate = useNavigate();
 
   const {
     data = {},
@@ -72,7 +74,15 @@ export default function Showtime({ movieId }) {
                       "DD-MM-YYYY ~ HH : mm"
                     );
                     // onClick = {()=>navigate(`/tickets/${showtime.maLichChieu}`)}
-                    return <button>{time}</button>;
+                    return (
+                      <button
+                        onClick={() =>
+                          navigate(`/tickets/${showtime.maLichChieu}`)
+                        }
+                      >
+                        {time}
+                      </button>
+                    );
                   })}
                 </div>
               </div>

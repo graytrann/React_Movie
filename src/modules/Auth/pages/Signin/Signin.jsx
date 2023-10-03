@@ -3,9 +3,10 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signin } from "../../../../apis/userAPI";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, useSearchParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useUserContext } from "../../../../contexts/UserContext/UserContext";
+import formStyles from "../../components/formStyles.module.scss";
 
 const signupSchema = object({
   taiKhoan: string().required("Tài Khoản không được để trống"),
@@ -30,6 +31,8 @@ export default function Signin() {
     // khi người dùng blur nó thì sẽ tự động hiện ra lỗi
     mode: "onTouched",
   });
+
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
@@ -61,31 +64,51 @@ export default function Signin() {
 
   // currentUser khác null => User đã đăng nhập , điều hướng về Home
   if (currentUser) {
-    return <Navigate to="/" replace />;
+    const redirectTo = searchParams.get("redirectTo");
+    return <Navigate to={redirectTo || "/"} replace />;
   }
 
   return (
-    <div>
-      <h1>ĐĂNG NHẬP</h1>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <div>
-          <input placeholder="Tài Khoản" {...register("taiKhoan")} />
-          {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Mật Khẩu"
-            {...register("matKhau")}
-          />
-          {errors.matKhau && <p>{errors.matKhau.message}</p>}
-        </div>
+    <div className={`${formStyles.form}`}>
+      <div>
+        <form
+          onSubmit={handleSubmit(onSubmit, onError)}
+          className={`${formStyles.form_background}`}
+        >
+          <div className={`${formStyles.form_container}`}>
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Tài Khoản</label>
+              <input
+                placeholder="Tài Khoản"
+                {...register("taiKhoan")}
+                className={`${formStyles.input_taiKhoan}`}
+              />
+              {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
+            </div>
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Mật Khẩu</label>
+              <input
+                className={`${formStyles.input_matKhau}`}
+                type="password"
+                placeholder="Mật Khẩu"
+                {...register("matKhau")}
+              />
+              {errors.matKhau && <p>{errors.matKhau.message}</p>}
+            </div>
 
-        <button type="submit" disabled={isLoading}>
-          Đăng Nhập
-        </button>
-        {error && <p>{error}</p>}
-      </form>
+            <div className="text-center mt-4">
+              <button
+                className="btn btn-success btn-lg"
+                type="submit"
+                disabled={isLoading}
+              >
+                Đăng Nhập
+              </button>
+              {error && <p>{error}</p>}
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

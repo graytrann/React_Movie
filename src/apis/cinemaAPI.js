@@ -27,3 +27,17 @@ export async function getMovieDetails(movieId) {
     throw error.response.data.content;
   }
 }
+
+export async function getTickets(showtimeId) {
+  try {
+    const response = await fetcher.get("/QuanLyDatVe/LayDanhSachPhongVe", {
+      params: {
+        maLichChieu: showtimeId,
+      },
+    });
+
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

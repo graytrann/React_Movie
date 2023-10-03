@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { object, string } from "yup";
 import { signup } from "../../../../apis/userAPI";
 import { useNavigate } from "react-router-dom";
+import formStyles from "../../components/formStyles.module.scss";
 
 const signupSchema = object({
   taiKhoan: string().required("Tài khoản không được để trống"),
@@ -65,54 +66,89 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <h1>SignUp</h1>
-      <form action="" onSubmit={handleSubmit(onSubmit, onError)}>
-        {/* TÀI KHOẢN INPUT  */}
-        <div>
-          <label htmlFor="">tài khoản</label>
-          <input
-            type="text"
-            placeholder="Tài Khoản"
-            {...register("taiKhoan")}
-          />
-          {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
-        </div>
-        {/* MẬT KHẨU INPUT  */}
-        <div>
-          <label htmlFor="">Mật Khẩu</label>
-          <input
-            type="password"
-            placeholder="Mật khẩu"
-            {...register("matKhau")}
-          />
-          {errors.matKhau && <p>{errors.matKhau.message}</p>}
-        </div>
-        {/* EMAIL INPUT  */}
-        <div>
-          <label htmlFor="">Email</label>
-          <input type="email" placeholder="Email" {...register("email")} />
-        </div>
-        {errors.email && <p>{errors.email.message}</p>}
-        {/* HỌ TÊN INPUT */}
-        <div>
-          <label htmlFor="">Họ tên </label>
-          <input type="text" placeholder="Họ tên" {...register("hoTen")} />
-        </div>
-        {errors.hoTen && <p>{errors.hoTen.message}</p>}
-        {/* SĐT INPUT */}
-        <div>
-          <label htmlFor="">Số điện thoại</label>
-          <input type="text" placeholder="SĐT" {...register("soDt")} />
-        </div>
-        {errors.soDt && <p>{errors.soDt.message}</p>}
-        {/* button submit */}
-        <button type="submit" disabled={isLoading}>
-          Đăng Ký
-        </button>
+    <div className={`${formStyles.form}`}>
+      
+      <div>
+        <form
+          onSubmit={handleSubmit(onSubmit, onError)}
+          className={`${formStyles.form_background}`}
+        >
+          
+          <div className={`${formStyles.form_container}`}>
+            {/* TÀI KHOẢN INPUT  */}
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Tài khoản</label>
+              <input
+                className={`${formStyles.input_taiKhoan}`}
+                type="text"
+                placeholder="Tài Khoản"
+                {...register("taiKhoan")}
+              />
 
-        {error && <p>{error}</p>}
-      </form>
+              {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
+            </div>
+            {/* MẬT KHẨU INPUT  */}
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Mật Khẩu</label>
+              <input
+                className={`${formStyles.input_matKhau}`}
+                type="password"
+                placeholder="Mật khẩu"
+                {...register("matKhau")}
+              />
+
+              {errors.matKhau && <p>{errors.matKhau.message}</p>}
+            </div>
+            {/* EMAIL INPUT  */}
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Email</label>
+              <input
+                type="email"
+                placeholder="Email"
+                {...register("email")}
+                className={`${formStyles.input_email}`}
+              />
+              {errors.email && <p>{errors.email.message}</p>}
+            </div>
+
+            {/* HỌ TÊN INPUT */}
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Họ tên </label>
+              <input
+                type="text"
+                placeholder="Họ tên"
+                {...register("hoTen")}
+                className={`${formStyles.input_hoTen}`}
+              />
+              {errors.hoTen && <p>{errors.hoTen.message}</p>}
+            </div>
+
+            {/* SĐT INPUT */}
+            <div className={`${formStyles.form_input}`}>
+              <label htmlFor="">Số điện thoại</label>
+              <input
+                type="text"
+                placeholder="SĐT"
+                {...register("soDt")}
+                className={`${formStyles.input_sdt}`}
+              />
+              {errors.soDt && <p>{errors.soDt.message}</p>}
+            </div>
+
+            {/* button submit */}
+            <div className="text-center mt-4 ">
+              <button
+                className="btn btn-success btn-lg"
+                type="submit"
+                disabled={isLoading}
+              >
+                Đăng Ký
+              </button>
+              {error && <p>{error}</p>}
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

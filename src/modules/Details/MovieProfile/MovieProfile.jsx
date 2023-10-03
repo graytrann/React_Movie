@@ -2,16 +2,19 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetails } from "../../../apis/cinemaAPI";
 import movieDetailsStyles from "./movieDetails.module.scss";
+import movieDetailStyles from "./movieDetail.module.scss";
 import dayjs from "dayjs";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import MovieModal from "./MovieModal";
 
+
 export default function MovieProfile({ movieId }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+ 
   const {
     data = {},
     isLoading,
@@ -26,44 +29,52 @@ export default function MovieProfile({ movieId }) {
   console.log("Phim đã được chọn", data);
   const time = dayjs(data.ngayKhoiChieu).format("DD-MM-YYYY");
   return (
-    <div className={movieDetailsStyles.movie}>
-      <div className={movieDetailsStyles.movie_container}>
-        <div
-          style={{ backgroundImage: "url(" + data.hinhAnh + ")" }}
-          className={movieDetailsStyles.movie_background}
-        ></div>
-        <div class={`${movieDetailsStyles.movie_detail} row`}>
-          <div class={`${movieDetailsStyles.movie_img}  col-sm-12 col-lg-4`}>
-            <img src={data.hinhAnh} alt="" />
-          </div>
+    <div>
+      <div className={`${movieDetailStyles.movie_detail}`}>
+        <div className={`${movieDetailStyles.movie_container}`}>
           <div
-            class={`${movieDetailsStyles.movie_info} col-sm-12 col-lg-8 px-lg-5 px-sm-0`}
-          >
-            <p>{time}</p>
-            <p>{data.tenPhim}</p>
-            <p>
-              <span className={movieDetailsStyles.movie_info_duration}>
-                120 phút
-              </span>{" "}
-              - 10 Tix - 2D/Digital
-            </p>
-            <Button variant="success" onClick={handleShow}>
-              Hiển Thị Thêm Thông Tin
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Thông tin chi tiết phim</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <MovieModal
-                  hinhAnh={data.hinhAnh}
-                  ngayKhoiChieu={data.ngayKhoiChieu}
-                  tenPhim={data.tenPhim}
-                  moTa={data.moTa}
-                  danhGia={data.danhGia}
-                />
-              </Modal.Body>
-            </Modal>
+            style={{ backgroundImage: "url(" + data.hinhAnh + ")" }}
+            className={`${movieDetailStyles.movie_background}`}
+          ></div>
+          <div className={`${movieDetailStyles.movie_row} row`}>
+            <div
+              className={`${movieDetailStyles.movie_pic} col-md-8 col-xs-12`}
+            >
+              <img src={data.hinhAnh} alt="" />
+            </div>
+            <div
+              className={`${movieDetailStyles.movie_text} col-md-4 col-xs-12`}
+            >
+              <p>{data.tenPhim}</p>
+              <hr />
+              <p>{time}</p>
+              <hr />
+              <p>
+                <span className={movieDetailStyles.movie_text_duration}>
+                  120 phút
+                </span>{" "}
+                - 10 Tix - 2D/Digital
+              </p>
+              <div className="text-center mt-4">
+                <Button variant="success" onClick={handleShow}>
+                  Hiển Thị Thêm Thông Tin
+                </Button>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Thông tin chi tiết phim</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <MovieModal
+                      hinhAnh={data.hinhAnh}
+                      ngayKhoiChieu={data.ngayKhoiChieu}
+                      tenPhim={data.tenPhim}
+                      moTa={data.moTa}
+                      danhGia={data.danhGia}
+                    />
+                  </Modal.Body>
+                </Modal>
+              </div>
+            </div>
           </div>
         </div>
       </div>
