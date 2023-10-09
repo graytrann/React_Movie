@@ -45,16 +45,19 @@ export default function MovieProfile({ movieId }) {
             <div
               className={`${movieDetailStyles.movie_text} col-md-4 col-xs-12`}
             >
-              <p>{data.tenPhim}</p>
+              <p>Tên Phim</p>
+              <h2>{data.tenPhim}</h2>
               <hr />
-              <p>{time}</p>
+              <p>Ngày khởi chiếu</p>
+              <h2>{time}</h2>
               <hr />
-              <p>
+              <p>Thời lượng</p>
+              <h2>
                 <span className={movieDetailStyles.movie_text_duration}>
                   120 phút
                 </span>{" "}
                 - 10 Tix - 2D/Digital
-              </p>
+              </h2>
               <div className="text-center mt-4">
                 <Button variant="success" onClick={handleShow}>
                   Hiển Thị Thêm Thông Tin

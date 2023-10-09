@@ -26,13 +26,15 @@ export default function TicketSeat({ ghe, isSelected }) {
     });
   };
   return (
-    <button
-      className={`${ticketStyles.tickets_seat} ${classes} m-2`}
-      disabled={ghe.daDat}
-      key={ghe.maGhe}
-      onClick={handleSelect}
-    >
-      {ghe.tenGhe}
-    </button>
+    <div className={`${ticketStyles.tickets_container}`}>
+      <button
+        className={`${ticketStyles.tickets_seat} ${classes} m-2`}
+        disabled={ghe.daDat}
+        key={ghe.maGhe}
+        onClick={handleSelect}
+      >
+        {ghe.tenGhe}
+      </button>
+    </div>
   );
 }

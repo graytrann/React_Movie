@@ -5,6 +5,10 @@
   height: 100%;
   border-radius: 5px;
   position: relative;
+
+  @media (max-width: 768px) {
+    height: 60vh
+  }
   .ticket {
     color: black;
   }

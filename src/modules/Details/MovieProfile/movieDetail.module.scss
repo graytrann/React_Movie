@@ -24,24 +24,39 @@
       position: absolute;
       top: 50%;
       left: 50%;
+      background-color: #222222;
       transform: translate(-50%, -50%);
+
+      @media screen and (max-width: 768px) {
+        width: 108%;
+      }
 
       .movie_pic {
         img {
           width: 100%;
           border-radius: 5px;
           background-size: cover;
+        
+        }
+        @media screen and (max-width: 768px) {
+          padding: 0;
+          margin-left: 13px;
         }
       }
 
       .movie_text {
         color: white;
+        h2{
+          color: #d9cb46;
+        }
+        
         p {
-          font-size: 30px;
+          font-size: 20px;
         }
         @media screen and (max-width: 768px) {
           text-align: center;
           margin-top: 30px; // Đặt width là 100% khi màn hình nhỏ hơn hoặc bằng 768px
+          margin-left: 13px;
         }
 
         .movie_text_duration {

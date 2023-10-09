@@ -41,3 +41,16 @@ export async function getTickets(showtimeId) {
     throw error.response.data.content;
   }
 }
+
+export async function bookingTickets(showtimeId, danhSachVe) {
+  try {
+    const response = await fetcher.post("/QuanLyDatVe/DatVe", {
+      maLichChieu: showtimeId,
+      danhSachVe: danhSachVe,
+    });
+
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

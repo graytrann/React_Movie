@@ -16,6 +16,7 @@ export default function Tickets() {
     return state.movie;
   });
 
+
   console.log("Mã lịch chiếu :", showtimeId);
   const {
     data = {},
@@ -27,9 +28,9 @@ export default function Tickets() {
     // nếu giá trị movieId là null hay undefined thì không gọi
     enabled: !!showtimeId,
   });
-  console.log("data:", data);
+  // console.log("data:", data);
   const danhSachGhe = data.danhSachGhe;
-  console.log("Danh Sách Ghế:", danhSachGhe);
+  // console.log("Danh Sách Ghế:", danhSachGhe);
 
   if (isLoading) {
     return <Loading />;
@@ -39,30 +40,25 @@ export default function Tickets() {
     <div className={`${ticketStyles.container}`}>
       <div className="row">
         <div className={`${ticketStyles.tickets} col-md-8 col-xs-12`}>
-          <MapInteractionCSS>
+          {/* <MapInteractionCSS className="col-md-8 col-xs-12"> */}
             <div className="text-center">
               <div className={`${ticketStyles.tickets_screen}`}>MÀN HÌNH</div>
             </div>
 
             {danhSachGhe && (
               <div className="d-flex flex-wrap justify-content-around">
-                {/* {data.danhSachGhe.map((ghe) => (
-                const isSelected = selectedSeats.find((item)=>item.id === ghe.tenGhe);
-                
-                <TicketSeat ghe={ghe} isSelected={isSelected}/>
-              ))} */}
                 {data.danhSachGhe.map((ghe) => {
                   const isSelected = selectedSeats.find(
                     (item) => item.tenGhe === ghe.tenGhe
                   );
-                  return <TicketSeat ghe={ghe} isSelected={!!isSelected} />;
+                  return <TicketSeat key={ghe.tenGhe} ghe={ghe} isSelected={!!isSelected} className="text-center"/>;
                 })}
               </div>
             )}
-          </MapInteractionCSS>
+          {/* </MapInteractionCSS> */}
         </div>
         <div className="col-md-4 col-xs-12">
-          <TicketInfo />
+          <TicketInfo showtimeId={showtimeId}/>
         </div>
       </div>
     </div>
