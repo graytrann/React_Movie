@@ -8,6 +8,9 @@ import Signin from "./modules/Auth/pages/Signin";
 import Signup from "./modules/Auth/pages/Signup";
 import UserProvider from "./contexts/UserContext/UserContext";
 import ProtectedRoute from "./routes/ProtectedRoute/ProtectedRoute";
+import Admin from "./admin";
+import ProtectedAdmin from "./adminRoutes.jsx/ProtectedAdmin";
+
 
 function App() {
   return (
@@ -35,9 +38,22 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           {/* TRANG ĐĂNG NHẬP */}
           <Route path="/sign-in" element={<Signin />} />
+          {/* TRANG ADMIN */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdmin>
+                <Admin />
+              </ProtectedAdmin>
+            }
+            
+          
+            
+          />
 
           {/* TRANG NOT FOUND */}
           <Route path="*" element={<NotFound />} />
+       
         </Routes>
       </BrowserRouter>
     </UserProvider>

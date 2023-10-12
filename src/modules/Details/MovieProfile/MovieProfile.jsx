@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetails } from "../../../apis/cinemaAPI";
-import movieDetailsStyles from "./movieDetails.module.scss";
 import movieDetailStyles from "./movieDetail.module.scss";
 import dayjs from "dayjs";
 import { useState } from "react";

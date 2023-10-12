@@ -6,8 +6,9 @@ import ticketStyles from "./ticketStyles.module.scss";
 import TicketSeat from "./TicketSeat";
 import TicketInfo from "./TicketInfo";
 import { useSelector } from "react-redux";
-import { MapInteractionCSS } from "react-map-interaction";
+
 import Loading from "../../components/Loading";
+
 
 export default function Tickets() {
   const { showtimeId } = useParams();
@@ -15,7 +16,6 @@ export default function Tickets() {
   const { selectedSeats } = useSelector((state) => {
     return state.movie;
   });
-
 
   console.log("Mã lịch chiếu :", showtimeId);
   const {
@@ -32,33 +32,36 @@ export default function Tickets() {
   const danhSachGhe = data.danhSachGhe;
   // console.log("Danh Sách Ghế:", danhSachGhe);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div className={`${ticketStyles.container}`}>
       <div className="row">
         <div className={`${ticketStyles.tickets} col-md-8 col-xs-12`}>
           {/* <MapInteractionCSS className="col-md-8 col-xs-12"> */}
-            <div className="text-center">
-              <div className={`${ticketStyles.tickets_screen}`}>MÀN HÌNH</div>
-            </div>
+          <div className="text-center">
+            <div className={`${ticketStyles.tickets_screen}`}>MÀN HÌNH</div>
+          </div>
 
-            {danhSachGhe && (
-              <div className="d-flex flex-wrap justify-content-around">
-                {data.danhSachGhe.map((ghe) => {
-                  const isSelected = selectedSeats.find(
-                    (item) => item.tenGhe === ghe.tenGhe
-                  );
-                  return <TicketSeat key={ghe.tenGhe} ghe={ghe} isSelected={!!isSelected} className="text-center"/>;
-                })}
-              </div>
-            )}
+          {danhSachGhe && (
+            <div className="d-flex flex-wrap justify-content-around">
+              {data.danhSachGhe.map((ghe) => {
+                const isSelected = selectedSeats.find(
+                  (item) => item.tenGhe === ghe.tenGhe
+                );
+                return (
+                  <TicketSeat
+                    key={ghe.tenGhe}
+                    ghe={ghe}
+                    isSelected={!!isSelected}
+                    className="text-center"
+                  />
+                );
+              })}
+            </div>
+          )}
           {/* </MapInteractionCSS> */}
         </div>
         <div className="col-md-4 col-xs-12">
-          <TicketInfo showtimeId={showtimeId}/>
+          <TicketInfo showtimeId={showtimeId} />
         </div>
       </div>
     </div>

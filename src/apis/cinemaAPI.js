@@ -54,3 +54,15 @@ export async function bookingTickets(showtimeId, danhSachVe) {
     throw error.response.data.content;
   }
 }
+
+export async function addMovie(movie) {
+  try {
+    const response = await fetcher.post(
+      "/QuanLyPhim/ThemPhimUpLoadHinh",
+      movie
+    );
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+}

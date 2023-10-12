@@ -33,12 +33,15 @@
 
       .movie_pic {
         img {
-          width: 100%;
+          height: 400px;
+          width: 800px;
           border-radius: 5px;
-          background-size: cover;
+          background-size: contain;
+          margin-top: 8px;
         
         }
         @media screen and (max-width: 768px) {
+          width: 100%;
           padding: 0;
           margin-left: 13px;
         }
