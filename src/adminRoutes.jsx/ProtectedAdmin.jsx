@@ -17,8 +17,8 @@ export default function ProtectedAdmin({ children }) {
     return <Navigate to={url} replace />;
   }
 
-//   if (currentUser.maLoaiNguoiDung === "KhachHang") {
-//     return <Navigate to="*" />;
-//   }
+  if (currentUser.maLoaiNguoiDung === "KhachHang") {
+    return <Navigate to="*" />;
+  }
   return children || Outlet;
 }

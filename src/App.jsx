@@ -8,9 +8,9 @@ import Signin from "./modules/Auth/pages/Signin";
 import Signup from "./modules/Auth/pages/Signup";
 import UserProvider from "./contexts/UserContext/UserContext";
 import ProtectedRoute from "./routes/ProtectedRoute/ProtectedRoute";
-import Admin from "./admin";
 import ProtectedAdmin from "./adminRoutes.jsx/ProtectedAdmin";
-
+import AdminLayout from "./admin/AdminLayout/AdminLayout";
+import AddMovie from "./admin/AddMovie";
 
 function App() {
   return (
@@ -43,17 +43,15 @@ function App() {
             path="/admin"
             element={
               <ProtectedAdmin>
-                <Admin />
+                <AdminLayout />
               </ProtectedAdmin>
             }
-            
-          
-            
-          />
+          >
+            <Route path="moviesmanage" element={<AddMovie />}></Route>
+          </Route>
 
           {/* TRANG NOT FOUND */}
           <Route path="*" element={<NotFound />} />
-       
         </Routes>
       </BrowserRouter>
     </UserProvider>
