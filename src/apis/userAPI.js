@@ -20,13 +20,31 @@ export const signup = async (payload) => {
 
 export const getUserList = async (payload) => {
   try {
-    const response = await fetcher.get(
-      "/QuanLyNguoiDung/LayDanhSachNguoiDung",
-      {
-        params: {
-          maNhom: "GP09",
-        },
-      }
+    const response = await fetcher.get("QuanLyNguoiDung/LayDanhSachNguoiDung", {
+      params: {
+        maNhom: "GP09",
+      },
+    });
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const createUser = async (user) => {
+  try {
+    const response = await fetcher.post("QuanLyNguoiDung/ThemNguoiDung", user);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const updateUser = async (user) => {
+  try {
+    const response = await fetcher.post(
+      "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      user
     );
     return response.data?.content;
   } catch (error) {

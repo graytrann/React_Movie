@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addMovie } from "../../apis/cinemaAPI";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
@@ -23,6 +23,8 @@ const movieFormSchema = object({
 });
 
 export default function AddMovie() {
+  const queryClient = useQueryClient();
+  const [isUpdating, setIsUpdating] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -44,9 +46,11 @@ export default function AddMovie() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      maPhim: "",
       tenPhim: "",
       biDanh: "",
       moTa: "",
@@ -79,8 +83,6 @@ export default function AddMovie() {
     ngayKhoiChieu: "",
   });
 
-  const [value, setValue] = useState({}); // Khởi tạo giá trị ban đầu của input
-
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     console.log(inputValue); // In ra giá trị mỗi khi người dùng gõ
@@ -94,7 +96,7 @@ export default function AddMovie() {
     console.log(formValues);
   };
 
-  const { mutate: onSubmit } = useMutation({
+  const { mutate: handleCreateMovie } = useMutation({
     mutationFn: (values) => {
       const formData = new FormData();
       formData.append("tenPhim", values.tenPhim);
@@ -114,6 +116,16 @@ export default function AddMovie() {
     onError: () => {},
   });
 
+  const onSubmit = (values) => {
+    if (isUpdating) {
+      // Thực hiện hàm cập nhật
+      handleUpdateMovie(values);
+    } else {
+      // Thực hiện hàm thêm mới
+      handleCreateMovie(values);
+    }
+    queryClient.invalidateQueries(["movies"]);
+  };
   useEffect(() => {
     // chạy vào useEffect call back khi giá trị của hinhAnh bị thay đổi
     const file = picture?.[0];
@@ -174,39 +186,27 @@ export default function AddMovie() {
   };
 
   const selectMovie = (movie) => {
-    // setIdFromSelect(movie.maPhim);
-    // setNameFromSelect(movie.tenPhim);
-    // setBiDanhFromSelect(movie.biDanh);
-    // setMoTaFromSelect(movie.moTa);
-    // setTrailerFromSelect(movie.trailer);
-    // setNgayKhoiChieuFromSelect(movie.ngayKhoiChieu);
-    // setImgPreview(movie.hinhAnh);
     // console.log(movie.hinhAnh);
+    setValue("maPhim", movie.maPhim);
+    setValue("tenPhim", movie.tenPhim);
+    setValue("biDanh", movie.biDanh);
+    setValue("moTa", movie.moTa);
+    // setValue("hinhAnh", movie.hinhAnh);
+    setValue("trailer", movie.trailer);
+    setValue("ngayKhoiChieu", movie.ngayKhoiChieu);
+    setIsUpdating(!isUpdating);
     setImgPreview(movie.hinhAnh);
-    console.log(movie.ngayKhoiChieu);
-    setFormValues({
-      ...formValues,
-      maPhim: movie.maPhim,
-      tenPhim: movie.tenPhim,
-      biDanh: movie.biDanh,
-      moTa: movie.moTa,
-      hinhAnh: movie.hinhAnh[0],
-      trailer: movie.trailer,
-      ngayKhoiChieu: movie.ngayKhoiChieu,
-    });
-    console.log(formValues);
-    handleShow();
   };
 
   const handleUpdateMovie = (movie) => {
     const formData = new FormData();
-    formData.append("maPhim", formValues.maPhim);
-    formData.append("tenPhim", formValues.tenPhim);
-    formData.append("biDanh", formValues.biDanh);
-    formData.append("moTa", formValues.moTa);
-    formData.append("hinhAnh", formValues.hinhAnh);
-    formData.append("trailer", formValues.trailer);
-    formData.append("ngayKhoiChieu", formValues.ngayKhoiChieu);
+    formData.append("maPhim", movie.maPhim);
+    formData.append("tenPhim", movie.tenPhim);
+    formData.append("biDanh", movie.biDanh);
+    formData.append("moTa", movie.moTa);
+    formData.append("hinhAnh", movie.hinhAnh[0]);
+    formData.append("trailer", movie.trailer);
+    formData.append("ngayKhoiChieu", movie.ngayKhoiChieu);
     formData.append("maNhom", "GP09");
     return updateMovie(formData);
   };
@@ -219,7 +219,17 @@ export default function AddMovie() {
             <form onSubmit={handleSubmit(onSubmit)} action="">
               <div className={`row ${adminMovieStyles.input_container}`}>
                 <input
-                  name="tenPhim"
+                  type="text"
+                  placeholder="Mã phim"
+                  {...register("maPhim")}
+                  className={`${adminMovieStyles.form_input}`}
+                  onChange={handleChange}
+                  disabled
+                />
+                {errors.maPhim && <p>{errors.maPhim.message}</p>}
+              </div>
+              <div className={`row ${adminMovieStyles.input_container}`}>
+                <input
                   type="text"
                   placeholder="Tên Phim"
                   {...register("tenPhim")}
@@ -280,7 +290,26 @@ export default function AddMovie() {
                 {errors.ngayKhoiChieu && <p>{errors.ngayKhoiChieu.message}</p>}
               </div>
 
-              <button className="btn btn-primary">Thêm Phim</button>
+              <div className="text-center mt-4">
+                {isUpdating ? (
+                  <button
+                    className="btn btn-success btn-lg"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    CẬP NHẬT
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-success btn-lg"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    THÊM PHIM
+                  </button>
+                )}
+                {error && <p>{error}</p>}
+              </div>
             </form>
           </div>
           <div className={`col-6 ${adminMovieStyles.image_input}`}>
@@ -330,85 +359,6 @@ export default function AddMovie() {
           </table>
         </div>
       </div>
-      <>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>CẬP NHẬT PHIM</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <input
-                type="text"
-                placeholder="Mã Phim"
-                name="maPhim"
-                value={formValues.maPhim}
-                disabled
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Tên Phim"
-                name="tenPhim"
-                value={formValues.tenPhim}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                name="biDanh"
-                placeholder="Bí Danh"
-                value={formValues.biDanh}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Mô tả"
-                name="moTa"
-                value={formValues.moTa}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <input
-                type="file"
-                placeholder="Hình ảnh"
-                name="hinhAnh"
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Trailer"
-                name="trailer"
-                value={formValues.trailer}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <input
-                type="date"
-                placeholder="Ngày khởi chiếu"
-                name="ngayKhoiChieu"
-                value={formValues.ngayKhoiChieu}
-                onChange={handleChange}
-              />
-              <div>{formValues.ngayKhoiChieu}</div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-
-            <button onClick={handleUpdateMovie}>CẬP NHẬT</button>
-          </Modal.Footer>
-        </Modal>
-      </>
     </div>
   );
 }
