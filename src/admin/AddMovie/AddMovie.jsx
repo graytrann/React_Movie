@@ -183,13 +183,14 @@ export default function AddMovie() {
     // setImgPreview(movie.hinhAnh);
     // console.log(movie.hinhAnh);
     setImgPreview(movie.hinhAnh);
+    console.log(movie.ngayKhoiChieu);
     setFormValues({
       ...formValues,
       maPhim: movie.maPhim,
       tenPhim: movie.tenPhim,
       biDanh: movie.biDanh,
       moTa: movie.moTa,
-      hinhAnh: movie.hinhAnh,
+      hinhAnh: movie.hinhAnh[0],
       trailer: movie.trailer,
       ngayKhoiChieu: movie.ngayKhoiChieu,
     });
@@ -279,8 +280,7 @@ export default function AddMovie() {
                 {errors.ngayKhoiChieu && <p>{errors.ngayKhoiChieu.message}</p>}
               </div>
 
-              <button>Thêm Phim</button>
-              <button onClick={() => handleUpdateMovie()}>Sửa Phim</button>
+              <button className="btn btn-primary">Thêm Phim</button>
             </form>
           </div>
           <div className={`col-6 ${adminMovieStyles.image_input}`}>
@@ -377,7 +377,6 @@ export default function AddMovie() {
                 type="file"
                 placeholder="Hình ảnh"
                 name="hinhAnh"
-                // value={formValues.hinhAnh}
                 onChange={handleChange}
               />
             </div>
@@ -398,7 +397,7 @@ export default function AddMovie() {
                 value={formValues.ngayKhoiChieu}
                 onChange={handleChange}
               />
-              {formValues.ngayKhoiChieu}
+              <div>{formValues.ngayKhoiChieu}</div>
             </div>
           </Modal.Body>
           <Modal.Footer>
