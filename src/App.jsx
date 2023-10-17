@@ -12,6 +12,7 @@ import ProtectedAdmin from "./adminRoutes.jsx/ProtectedAdmin";
 import AdminLayout from "./admin/AdminLayout/AdminLayout";
 import AddMovie from "./admin/AddMovie";
 import AdminUser from "./admin/AdminUser";
+import AdminShowtime from "./admin/AdminShowtime/AdminShowtime";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           >
             <Route path="moviesmanage" element={<AddMovie />}></Route>
             <Route path="usermanage" element={<AdminUser />}></Route>
+            <Route path="showtimesmanage" element={<AdminShowtime />}></Route>
           </Route>
 
           {/* TRANG NOT FOUND */}

@@ -1,12 +1,10 @@
-
 import React from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link, Outlet } from "react-router-dom";
 
-
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = React.useState(false);
-  
+
   return (
     <div style={{ display: "flex", height: "100%" }}>
       <div>
@@ -27,14 +25,9 @@ export default function AdminLayout() {
             <SubMenu label="QUẢN LÝ PHIM">
               <MenuItem component={<Link to="moviesmanage" />}>PHIM</MenuItem>
             </SubMenu>
-            <SubMenu label="QUẢN LÝ RẠP">
-              <MenuItem component={<Link to="moviesmanage" />}>
-                NGƯỜI DÙNG
-              </MenuItem>
-            </SubMenu>
             <SubMenu label="QUẢN LÝ PHÒNG VÉ">
-              <MenuItem component={<Link to="moviesmanage" />}>
-                PHÒNG VÉ
+              <MenuItem component={<Link to="showtimesmanage" />}>
+                THÊM LỊCH CHIẾU
               </MenuItem>
             </SubMenu>
             <SubMenu label="QUẢN LÝ NGƯỜI DÙNG">

@@ -51,3 +51,16 @@ export const updateUser = async (user) => {
     throw error.response.data?.content;
   }
 };
+
+export async function deleteUser(userAccount) {
+  try {
+    const response = await fetcher.delete("/QuanLyNguoiDung/XoaNguoiDung", {
+      params: {
+        TaiKhoan: userAccount,
+      },
+    });
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

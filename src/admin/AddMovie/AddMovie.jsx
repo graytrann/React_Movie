@@ -327,7 +327,9 @@ export default function AddMovie() {
                 <th scope="col">MÃ PHIM</th>
                 <th scope="col">TÊN PHIM</th>
                 <th scope="col">NGÀY KHỞI CHIẾU</th>
-                <th scope="col">ACTION</th>
+                <th scope="col" style={{ width: 234 }}>
+                  ACTION
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -349,7 +351,11 @@ export default function AddMovie() {
                         onClick={() => selectMovie(movie)}
                         className="btn btn-warning me-3"
                       >
-                        LỰA PHIM
+                        {isUpdating ? (
+                          <span>Lựa Phim</span>
+                        ) : (
+                          <span>Hủy Lựa Phim</span>
+                        )}
                       </button>
                     </td>
                   </tr>

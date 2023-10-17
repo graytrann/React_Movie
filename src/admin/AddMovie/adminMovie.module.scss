@@ -2,6 +2,9 @@
   .container {
     .form {
       height: 650px;
+      p {
+        color: red;
+      }
       .input_container {
         height: 80px;
         .form_input {

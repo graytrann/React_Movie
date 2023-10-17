@@ -1,11 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { createUser, getUserList, updateUser } from "../../apis/userAPI";
+import {
+  createUser,
+  getUserList,
+  updateUser,
+  deleteUser,
+} from "../../apis/userAPI";
 import dayjs from "dayjs";
 import { object, string } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import adminUserStyles from "./adminUser.module.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 const userSchema = object({
   taiKhoan: string().required("Tài khoản không được để trống"),
   matKhau: string()
@@ -96,15 +103,63 @@ export default function AdminUser() {
     setIsUpdating(!isUpdating);
   };
 
+  // xóa phim
+  const handleDeleteUser = (TaiKhoan) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          deleteUser(TaiKhoan)
+            .then(() => {
+              console.log("thành công xóa");
+              queryClient.invalidateQueries(["userlist"]);
+            })
+            .catch((error) => {
+              // Xử lý lỗi nếu có.
+              console.error("Lỗi xóa phim:", error);
+            });
+          swalWithBootstrapButtons.fire(
+            "Deleted!",
+            "TÀI KHOẢN BỊ XÓA RỒI HUHU :<.",
+            "success"
+          );
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            "TÀI KHẢON CỦA BẠN VẪN AN TOÀN =))",
+            "error"
+          );
+        }
+      });
+  };
   return (
     <div>
       <div>
         <div>
-          <div>
+          <div className={`${adminUserStyles.form}`}>
             <form onSubmit={handleSubmit(onSubmit, onError)}>
               <div>
                 {/* TÀI KHOẢN INPUT  */}
-                <div>
+                <div className={`${adminUserStyles.input_account}`}>
                   <label htmlFor="">Tài khoản</label>
                   <input
                     type="text"
@@ -115,7 +170,7 @@ export default function AdminUser() {
                   {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
                 </div>
                 {/* MẬT KHẨU INPUT  */}
-                <div>
+                <div className={`${adminUserStyles.input_password}`}>
                   <label htmlFor="">Mật Khẩu</label>
                   <input
                     type="password"
@@ -126,7 +181,7 @@ export default function AdminUser() {
                   {errors.matKhau && <p>{errors.matKhau.message}</p>}
                 </div>
                 {/* EMAIL INPUT  */}
-                <div>
+                <div className={`${adminUserStyles.input_email}`}>
                   <label htmlFor="">Email</label>
                   <input
                     type="email"
@@ -137,7 +192,7 @@ export default function AdminUser() {
                 </div>
 
                 {/* HỌ TÊN INPUT */}
-                <div>
+                <div className={`${adminUserStyles.input_name}`}>
                   <label htmlFor="">Họ tên </label>
                   <input
                     type="text"
@@ -148,13 +203,13 @@ export default function AdminUser() {
                 </div>
 
                 {/* SĐT INPUT */}
-                <div>
+                <div className={`${adminUserStyles.input_phone}`}>
                   <label htmlFor="">Số điện thoại</label>
                   <input type="text" placeholder="SĐT" {...register("soDt")} />
                   {errors.soDt && <p>{errors.soDt.message}</p>}
                 </div>
 
-                <div>
+                <div className={`${adminUserStyles.input_usertype}`}>
                   <label htmlFor="">Loại người dùng</label>
                   {/* <input
                     type="text"
@@ -171,7 +226,7 @@ export default function AdminUser() {
                   )}
                 </div>
 
-                <div>
+                <div className={`${adminUserStyles.input_group}`}>
                   <label htmlFor="">Mã nhóm</label>
                   <input
                     type="text"
@@ -217,7 +272,9 @@ export default function AdminUser() {
               <th scope="col">Email</th>
               <th scope="col">Số Điện Thoại</th>
               <th scope="col">LOẠI NGƯỜI DÙNG</th>
-              <th scope="col">HÀNH ĐỘNG</th>
+              <th scope="col" style={{ width: 234 }}>
+                HÀNH ĐỘNG
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -233,12 +290,21 @@ export default function AdminUser() {
                       : "Quản trị"}
                   </td>
                   <td>
-                    <button className="btn btn-danger me-3">XÓA</button>
+                    <button
+                      className="btn btn-danger me-3"
+                      onClick={() => handleDeleteUser(user.taiKhoan)}
+                    >
+                      XÓA
+                    </button>
                     <button
                       className="btn btn-warning me-3"
                       onClick={() => selectUser(user)}
                     >
-                      CẬP NHẬT
+                      {isUpdating ? (
+                        <span>Cập Nhật</span>
+                      ) : (
+                        <span>Hủy Cập Nhật</span>
+                      )}
                     </button>
                   </td>
                 </tr>
