@@ -22,6 +22,7 @@
     .movie_row {
       width: 85%;
       position: absolute;
+      height: 500px;
       top: 50%;
       left: 50%;
       background-color: #222222;
@@ -33,12 +34,11 @@
 
       .movie_pic {
         img {
-          height: 400px;
-          width: 800px;
+          height: 480px;
+          width: 680px;
           border-radius: 5px;
           background-size: contain;
           margin-top: 8px;
-        
         }
         @media screen and (max-width: 768px) {
           width: 100%;
@@ -49,10 +49,10 @@
 
       .movie_text {
         color: white;
-        h2{
+        h2 {
           color: #d9cb46;
         }
-        
+
         p {
           font-size: 20px;
         }

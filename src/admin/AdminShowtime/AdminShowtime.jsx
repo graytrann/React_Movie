@@ -11,6 +11,8 @@ import {
   createShowTime,
 } from "../../apis/cinemaAPI";
 import adminShowtimeStyles from "./adminShowtime.module.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const showtimeSchema = object({
   maHeThongRap: string().required("Hệ thống rạp không được để trống"),
@@ -143,6 +145,7 @@ export default function AdminShowtime() {
 
   const onSubmit = (values) => {
     handleCreateShowtime(values);
+    Swal.fire("TẠO LỊCH ĐẶT THÀNH CÔNG!");
   };
 
   // sau khi form thất bại
@@ -235,20 +238,6 @@ export default function AdminShowtime() {
         </form>
       </div>
       <div>
-        {/* {movies.map((movie) => {
-          return (
-            <div key={movie.maPhim}>
-              {movie.tenPhim}
-              <button
-                onClick={() => {
-                  selectMovie(movie);
-                }}
-              >
-                Chọn phim
-              </button>
-            </div>
-          );
-        })} */}
         <table className="table">
           <thead>
             <tr>

@@ -2,12 +2,12 @@
   text-align: center;
   color: white;
   background-color: #b22222;
-  height: 100%;
+  height: 528px;
   border-radius: 5px;
   position: relative;
 
   @media (max-width: 768px) {
-    height: 60vh
+    height: 60vh;
   }
   .ticket {
     color: black;
@@ -18,8 +18,8 @@
     left: 50%;
     transform: translateX(-50%);
     bottom: 0;
-    hr{
-        width: 100%;
+    hr {
+      width: 100%;
     }
   }
 }
