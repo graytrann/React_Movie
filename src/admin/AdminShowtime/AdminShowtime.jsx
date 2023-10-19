@@ -10,6 +10,7 @@ import {
   getCinemaTheater,
   createShowTime,
 } from "../../apis/cinemaAPI";
+import adminShowtimeStyles from "./adminShowtime.module.scss";
 
 const showtimeSchema = object({
   maHeThongRap: string().required("Hệ thống rạp không được để trống"),
@@ -150,14 +151,14 @@ export default function AdminShowtime() {
   };
   return (
     <div>
-      <div>
+      <div className={`${adminShowtimeStyles.form}`}>
         <form action="" onSubmit={handleSubmit(onSubmit, onError)}>
           <div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_movieID}`}>
               <label htmlFor="">Mã phim</label>
-              <input {...register("maPhim")}></input>
+              <input disabled {...register("maPhim")}></input>
             </div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_cinemaSystems}`}>
               <label htmlFor="">Hệ thống rạp</label>
               <select
                 {...register("maHeThongRap")}
@@ -175,7 +176,7 @@ export default function AdminShowtime() {
                 })}
               </select>
             </div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_theaters}`}>
               <label htmlFor="">Rạp</label>
               <select
                 {...register("maRap")}
@@ -190,7 +191,7 @@ export default function AdminShowtime() {
                 })}
               </select>
             </div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_theater_rooms}`}>
               <label htmlFor="">Mã Rạp</label>
               <select
                 {...register("rapId")}
@@ -205,15 +206,18 @@ export default function AdminShowtime() {
                 })}
               </select>
             </div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_time}`}>
               <label htmlFor="">Ngày chiếu giờ chiếu</label>
               <input
                 placeholder="Ngày Khởi Chiếu"
                 type="text"
                 {...register("ngayChieuGioChieu")}
               />
+              {errors.ngayChieuGioChieu && (
+                <p>{errors.ngayChieuGioChieu.message}</p>
+              )}
             </div>
-            <div>
+            <div className={`${adminShowtimeStyles.input_price}`}>
               <label htmlFor="">Giá vé</label>
               <input
                 placeholder="Ngày Khởi Chiếu"
@@ -223,7 +227,7 @@ export default function AdminShowtime() {
               {errors.giaVe && <p>{errors.giaVe.message}</p>}
             </div>
             <div>
-              <button className="btn btn-success btn-lg" type="submit">
+              <button className="btn btn-success btn-lg m-4" type="submit">
                 TẠO LỊCH
               </button>
             </div>
@@ -231,7 +235,7 @@ export default function AdminShowtime() {
         </form>
       </div>
       <div>
-        {movies.map((movie) => {
+        {/* {movies.map((movie) => {
           return (
             <div key={movie.maPhim}>
               {movie.tenPhim}
@@ -244,7 +248,34 @@ export default function AdminShowtime() {
               </button>
             </div>
           );
-        })}
+        })} */}
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Tên Phim</th>
+              <th scope="col">Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {movies.map((movie) => {
+              return (
+                <tr>
+                  <th scope="row">{movie.tenPhim}</th>
+                  <td>
+                    <button
+                      onClick={() => {
+                        selectMovie(movie);
+                      }}
+                      className="btn btn-primary"
+                    >
+                      TẠO LỊCH CHIẾU
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -1,0 +1,57 @@
+.form {
+  .input_movieID {
+    height: 65px;
+    label {
+      margin-right: 80px;
+    }
+    p {
+      color: red;
+    }
+  }
+  .input_cinemaSystems {
+    height: 65px;
+    label {
+      margin-right: 48px;
+    }
+    p {
+      color: red;
+    }
+  }
+  .input_theaters {
+    height: 65px;
+    label {
+      margin-right: 116px;
+    }
+    p {
+      color: red;
+    }
+  }
+  .input_theater_rooms {
+    height: 65px;
+    label {
+      margin-right: 91px;
+    }
+    p {
+      color: red;
+    }
+  }
+
+  .input_time {
+    height: 65px;
+    label {
+      margin-right: 28px;
+    }
+    p {
+      color: red;
+    }
+  }
+  .input_price {
+    height: 65px;
+    label {
+      margin-right: 100px;
+    }
+    p {
+      color: red;
+    }
+  }
+}
