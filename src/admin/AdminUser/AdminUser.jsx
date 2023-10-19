@@ -69,12 +69,7 @@ export default function AdminUser() {
     queryFn: getUserList,
   });
 
-  // sau khi form thành công
-  // const onSubmit = (values) => {
-  //   console.log(values);
-  //   // gọi API tạo tài khoản
-  //   handleCreateUser(values);
-  // };
+
   const onSubmit = (values) => {
     if (isUpdating) {
       // Thực hiện hàm cập nhật

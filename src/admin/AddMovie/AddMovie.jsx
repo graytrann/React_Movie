@@ -352,9 +352,9 @@ export default function AddMovie() {
                         className="btn btn-warning me-3"
                       >
                         {isUpdating ? (
-                          <span>Lựa Phim</span>
+                          <span>Hủy lựa Phim</span>
                         ) : (
-                          <span>Hủy Lựa Phim</span>
+                          <span> Lựa Phim</span>
                         )}
                       </button>
                     </td>

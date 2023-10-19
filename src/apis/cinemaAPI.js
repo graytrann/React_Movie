@@ -66,3 +66,43 @@ export async function addMovie(movie) {
     throw error.response.data?.content;
   }
 }
+
+export async function getCinemaInfo(cinemaId) {
+  try {
+    const response = await fetcher.get("/QuanLyRap/LayThongTinHeThongRap", {
+      params: {
+        maHeThongRap: cinemaId,
+      },
+    });
+
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
+
+export async function getCinemaTheater(cinemaId) {
+  try {
+    const response = await fetcher.get(
+      "/QuanLyRap/LayThongTinCumRapTheoHeThong",
+      {
+        params: {
+          maHeThongRap: cinemaId,
+        },
+      }
+    );
+
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
+
+export async function createShowTime(movie) {
+  try {
+    const response = await fetcher.post("/QuanLyDatVe/TaoLichChieu", movie);
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
