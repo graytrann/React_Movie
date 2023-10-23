@@ -4,9 +4,6 @@ import fetcher from "./fetcher";
 export async function getBanners() {
   try {
     const response = await fetcher.get("/QuanLyPhim/LayDanhSachBanner");
-    // console.log(response);
-    // console.log(response.data.content);
-
     return response.data.content;
   } catch (error) {
     throw error.response.data.content;

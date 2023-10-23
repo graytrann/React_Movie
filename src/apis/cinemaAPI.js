@@ -98,6 +98,24 @@ export async function getCinemaTheater(cinemaId) {
   }
 }
 
+export async function getCinemaShowTimes(cinemaId) {
+  try {
+    const response = await fetcher.get(
+      "/QuanLyRap/LayThongTinLichChieuHeThongRap",
+      {
+        params: {
+          maHeThongRap: cinemaId,
+          maNhom: "GP09",
+        },
+      }
+    );
+
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
+
 export async function createShowTime(movie) {
   try {
     const response = await fetcher.post("/QuanLyDatVe/TaoLichChieu", movie);

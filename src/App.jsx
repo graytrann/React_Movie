@@ -14,6 +14,11 @@ import AddMovie from "./admin/AddMovie";
 import AdminUser from "./admin/AdminUser";
 import AdminShowtime from "./admin/AdminShowtime/AdminShowtime";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/grid";
+import "swiper/css/pagination";
+
 function App() {
   return (
     <UserProvider>
