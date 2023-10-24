@@ -30,7 +30,7 @@ export default function TicketInfo({ showtimeId }) {
   const handleBooking = () => {
     bookingTickets(showtimeId, selectedSeats);
     MySwal.fire({
-      position: "top-end",
+      position: "center",
       icon: "success",
       title: "ĐẶT VÉ THÀNH CÔNG",
       showConfirmButton: false,
@@ -78,7 +78,6 @@ export default function TicketInfo({ showtimeId }) {
         <button onClick={handleBooking} className="btn btn-success mt-1">
           ĐẶT VÉ
         </button>
-
       </div>
     </div>
   );

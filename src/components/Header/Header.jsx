@@ -44,8 +44,8 @@ export default function Header(props) {
   const pages = [
     { id: "showing", label: "Lịch chiếu" },
     { id: "cinema", label: "Cụm rạp" },
-    { id: "tintuc", label: "Tin tức" },
-    { id: "ungdung", label: "Ứng dụng" },
+    // { id: "tintuc", label: "Tin tức" },
+    // { id: "ungdung", label: "Ứng dụng" },
   ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -191,8 +191,22 @@ export default function Header(props) {
               {/* Account */}
               {currentUser ? (
                 <>
+                  <Box sx={{ flexGrow: 0, borderRight: 1 }}>
+                    <IconButton
+                      sx={{
+                        "&:hover": {
+                          color: "rgb(211, 47, 47) ",
+                          backgroundColor: "transparent",
+                        },
+                      }}
+                    >
+                      <Typography onClick={() => navigate(`/admin`)}>
+                        Bạn có phải là Admin?
+                      </Typography>
+                    </IconButton>
+                  </Box>
                   <Box
-                    sx={{ flexGrow: 0, borderRight: 1, pr: 2 }}
+                    sx={{ flexGrow: 0, borderRight: 1, pr: 1 }}
                     display={"inline-block"}
                   >
                     <Tooltip title="User">
@@ -252,6 +266,15 @@ export default function Header(props) {
                 </>
               ) : (
                 <>
+                  <Box sx={{ flexGrow: 0 }}>
+                    <SigninAndSignup
+                      onClick={() => navigate(`/admin`)}
+                      borderRight="1px solid #9e9e9e"
+                    >
+                      <SpanHeader>Bạn có phải là Admin?</SpanHeader>
+                    </SigninAndSignup>
+                  </Box>
+
                   {/* Signin */}
                   <Box sx={{ flexGrow: 0 }}>
                     <SigninAndSignup
