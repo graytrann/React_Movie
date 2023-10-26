@@ -42,7 +42,7 @@ export default function Tickets() {
           </div>
 
           {danhSachGhe && (
-            <div className="d-flex flex-wrap justify-content-around">
+            <div className="d-flex flex-wrap justify-content-around" style={{padding: 43}}>
               {data.danhSachGhe.map((ghe) => {
                 const isSelected = selectedSeats.find(
                   (item) => item.tenGhe === ghe.tenGhe

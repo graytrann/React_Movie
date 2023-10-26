@@ -8,12 +8,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import MovieModal from "./MovieModal";
 
-
 export default function MovieProfile({ movieId }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
- 
+
   const {
     data = {},
     isLoading,
@@ -39,7 +38,11 @@ export default function MovieProfile({ movieId }) {
             <div
               className={`${movieDetailStyles.movie_pic} col-md-8 col-xs-12`}
             >
-              <img src={data.hinhAnh} alt="" />
+              <div
+                className={`${movieDetailStyles.movie_pic_container} col-md-8 col-xs-12`}
+              >
+                <img src={data.hinhAnh} alt="" />
+              </div>
             </div>
             <div
               className={`${movieDetailStyles.movie_text} col-md-4 col-xs-12`}

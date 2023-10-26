@@ -5,6 +5,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  margin-top: 65px;
   .tickets {
     .tickets_screen {
       color: white;
@@ -15,10 +16,10 @@
       margin-bottom: 20px;
     }
     .tickets_container {
-      width: 60px;
-      @media (max-width: 768px) {
-        width: 22px;
-      }
+      width: 5%;
+      // @media (max-width: 768px) {
+      //   width: 22px;
+      // }
       .tickets_seat {
         width: 43px;
         font-size: 11px;
